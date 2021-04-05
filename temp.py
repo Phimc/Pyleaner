@@ -1,15 +1,28 @@
 n = int(input())
-d = 10**(-n)
-t = 1
-def pi(x):
-    t1 = (2**0.5)/2
-    t2 = 2**0.5
-    for i in range(x):
-        t2 = (t2+2)**0.5
-        t1 = t1*t2/2
-    return 2/t1
+tcode = []
 
-while abs(pi(t+1)-pi(t)) > d:
-    t = t+1
-print(t+2)
-print(round(pi(t+2),n))
+for i in range(n):
+    tcode.append(list(input()))
+
+for i in range(n):    
+    while '\t' in tcode[i]:
+        tcode[i][tcode[i].index('\t')] = '    '
+    
+    space = 0
+    for j in range(len(tcode[i])):
+        if tcode[i][j] != ' ':
+            break
+        else:
+            space += 1
+    if space % 4 != 0:
+        space = 4-(space % 4)
+        for k in range(space):
+            tcode[i].insert(0,' ')
+    
+    while '#' in tcode[i]:
+        if tcode[i][tcode[i].index('#')+1] != ' ':
+            tcode[i][tcode[i].index('#')] = '# '
+        break
+ 
+for i in range(n):
+    print(''.join(tcode[i]))
