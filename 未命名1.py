@@ -1,72 +1,41 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Jan 25 20:32:27 2021
-
+Created on Thu May 27 16:30:40 2021
+大计基OJ8-3
 @author: Phmc
 """
-class Stack():
-    def __init__(self):
-        self.items = [] #空栈初始化（空数组）
-        
-    def push(self,items):
-        self.items.append(items)
-        
-    def pop(self):
-        if not self.isEmpty():
-            return self.items.pop()
-    
-    def isEmpty(self):
-        return self.items == []
 
-    def peek(self):
-        return self.items[-1]
-    
-    def size(self):
-        return len(self.items)
+import numpy as np
+import matplotlib.pyplot as plt
+s = list(input())
+dic = {}
+# 统计字频
+for char in s:
+    try:
+        dic[char] += 1
+    except :
+        dic[char] = 1
+# 降序排列
+group = sorted(dic.items(),key = lambda kv:(kv[1],kv[0]))        
+group.reverse()
+characters = [point[0]for point in group]
+char_times = [point[1]for point in group]
 
-s = input() #输入str
-numst = Stack() #数字栈
-cacu = Stack() #运算符号栈
-sign = [] #运算符号list
-#生成运算符号list
-st = list(s)
-for i in range(len(s)):
-    if s[i] == '+' or s[i] == '*':
-        sign.append(s[i])
-        st[i] = ' '
-stc = ''.join(st)
-num = list(map(int,stc.split(' '))) #数字list
-#第一个数字入栈
-numst.push(num[0])
-for i in range(len(sign)):
-    #逐个读取数字i+1，符号i
-    if sign[i] == '*':#如果是*，pop出栈顶与新数字做乘法
-        n1 = numst.peek()
-        numst.pop()
-        numst.push((n1 % 10000)*(num[i+1]%10000))
-    elif sign[i] == '+': 
-        if cacu.isEmpty():
-            numst.push(num[i+1])
-            cacu.push(sign[i])
-        elif cacu.peek() == '*':
-            n1 = numst.peek()
-            numst.pop()
-            n2 = numst.peek()
-            numst.pop()
-            numst.push((n1 % 10000)*(n2 % 10000))
-        else:
-            n1 = numst.peek()
-            numst.pop()
-            n2 = numst.peek()
-            numst.pop()
-            numst.push((n1 % 10000)+(n2 % 10000))
-            numst.push(num[i+1])
-            cacu.push(sign[i])
-            
-sumnum = 0
-#求和
-while not numst.isEmpty():
-    sumnum += numst.peek()
-    sumnum % 10000
-    numst.pop()
-print(sumnum % 10000)
+x = np.arange(len(characters))
+width = 0.5
+colorv = np.linspace(0,0.5,len(characters))
+colorset = [0 for i in range(len(characters))]
+for i in range(len(colorset)):
+    colorset[i] =plt.cm.Spectral(colorv[i])
+fg = plt.figure(figsize=(4.8, 3.6))
+ax = plt.axes()
+ct = ax.bar(x,char_times,width,color=colorset)
+ax.set_title('Input:%s'%''.join(s))
+ax.set_ylabel('Counts')
+ax.set_xlabel('Character(s)')
+ax.set_xticks(x)
+ax.set_xticklabels(characters)
+
+#fg.tight_layout()
+fg.savefig('hwjj.png',dpi=300)
+plt.show()

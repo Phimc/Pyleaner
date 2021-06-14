@@ -73,3 +73,4 @@ dijkstra()
 print(costs['9'])
 
 end = time.time()
+print("用时%ss"%(end-start))
