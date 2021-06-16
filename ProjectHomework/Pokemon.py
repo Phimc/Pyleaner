@@ -83,6 +83,10 @@ class Pokemon:
         return [nature_correspond*nature_plus*strategic_plus,nature_plus]
 
     def attack(self,skill,poke):
+        if skill.PP > 0:
+            skill.PP -= 1
+        else:
+            raise Exception
         plus,affect = self.find_plus(skill,poke)
         attack_Hp = ((2*self.level+10)/250*(self.atk/poke.df)*skill.atk+2)*plus
         if attack_Hp < 1:

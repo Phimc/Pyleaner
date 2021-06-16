@@ -28,18 +28,24 @@ def get_input(max):
 def play(poke,another):
     print('''%s的回合！\n你的技能:'''%poke.name)
     for i in range(4):
-        print('%d:%s        属性:%s,威力:%d,命中率:%d'
-        %(i+1,poke.skills[i].name,poke.skills[i].nature.name,poke.skills[i].atk,poke.skills[i].aim))
+        print('%d:%s        属性:%s,威力:%d,命中率:%d,PP:%d'
+        %(i+1,poke.skills[i].name,poke.skills[i].nature.name,poke.skills[i].atk,poke.skills[i].aim,poke.skills[i].PP))
     print('请选择')
-    choice = get_input(4)
-    d_Hp,af = poke.attack(poke.skills[choice],another)
+    
+    while True:
+        try:
+            choice = get_input(4)
+            d_Hp,af = poke.attack(poke.skills[choice],another)
+            break
+        except:
+            print('PP为0，请选择其他技能')
     print('%s攻击%s ,造成了 %d 点伤害%s' 
     %(poke.name,another.name,d_Hp,af))
 def aiplay(poke,another,choice):
     print('''%s的回合！\n你的技能:'''%poke.name)
     for i in range(4):
-        print('%d:%s        属性:%s,威力:%d,命中率:%d'
-        %(i+1,poke.skills[i].name,poke.skills[i].nature.name,poke.skills[i].atk,poke.skills[i].aim))
+        print('%d:%s        属性:%s,威力:%d,命中率:%d,PP:%d'
+        %(i+1,poke.skills[i].name,poke.skills[i].nature.name,poke.skills[i].atk,poke.skills[i].aim,poke.skills[i].PP))
     print('请选择')
     print(choice)
     d_Hp,af = poke.attack(poke.skills[choice],another)
