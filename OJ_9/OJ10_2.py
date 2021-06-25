@@ -24,8 +24,10 @@ Logout_button.grid(row=3,column=3)
 def Login():
     user = str(username_text.get())
     pasw = str(password_text.get())
-    if user == '':
-        messagebox.showinfo('Wrong Username','Enter correct username,plz~')
+    if user == ''and pasw == '':
+        messagebox.showinfo('Wrong Username and Password','Enter correct username and password,plz~')
+    elif user == '':
+        messagebox.showinfo('Wrong Username','Enter correct Username,plz~')       
     elif pasw == '':
         messagebox.showinfo('Wrong Password','Enter correct password,plz~')
     else:

@@ -1,16 +1,18 @@
 # Store Information of Pokemons
-# 倍率
 import numpy.random as rand
 
 # 属性
 class Nature:
     def __init__(self,name) :
+        '''精灵、技能属性\nname=名字'''
         self.name = name
+
+
 normal = Nature('normal')
 act = Nature('act')
 fire = Nature('fire')
 ice = Nature('ice')
-electric = Nature('electric')
+electric = Nature()
 
 plus_dict = {}
 plus_dict[normal]   = {normal:1,  act:1,  fire:1,  ice:1,  electric:1}
@@ -23,44 +25,27 @@ af = {0.5:'，效果不佳。',1:'。',2:'，效果拔群！'}
 # 技能
 class Skill:
     def __init__(self,nature,atk,aim,PP,name):
+        '''技能\nnature=属性，atk=威力，aim=命中率，PP=最大使用次数，name=名字'''
         self.PP = PP
         self.nature = nature
         self.atk = atk
         self.aim = aim
         self.name = name
 
-thunder_shock = Skill(electric,40,100,30,'thunder shock')
-nuzzle = Skill(electric,20,100,20,'nuzzle')
-slam = Skill(normal,80,75,20,'slam')
-feint = Skill(normal,30,100,10,'feint')
-pay_day = Skill(normal,40,100,20,'pay_day')
-snore = Skill(normal,50,100,15,'snore')
-icy_wind = Skill(ice,55,95,15,'ice wind')
-thunderbolt = Skill(electric,90,100,15,'thunderbollt')
-scratch = Skill(normal,40,100,35,'scratch')
-ember = Skill(fire,40,100,25,'ember')
-fire_punch = Skill(fire,75,100,15,'fire_punch')
-inferno = Skill(fire,100,50,5,'inferno')
-powder_snow = Skill(ice,40,100,25,'powder_snow')
-blizzard = Skill(ice,110,70,5,'blizzard')
-ice_punch = Skill(ice,75,100,15,'ice_punch')
-pound = Skill(normal,40,100,35,'pound')
-tackle = Skill(normal,40,100,35,'tackle')
-karate_chop = Skill(act,50,100,25,'karate chop')
-headbutt = Skill(normal,70,100,15,'headbutt')
 
 # 神奇宝贝
 class Pokemon:
-    def __init__(self,skills,nature,name):
+    def __init__(self,skills,nature,name,Hp,atk,df):
+        
         self.skills = skills
         self.nature = nature
-        self.MaxHp = 50
-        self.Hp = 50
-        self.level = 20
-        self.atk = 45
-        self.df = 45
         self.name = name
-
+        self.MaxHp = Hp
+        self.Hp = Hp
+        self.level = 50
+        self.atk = atk
+        self.df = df      
+    # 计算加成
     def find_plus(self,skill,poke):
         nature_plus = plus_dict[skill.nature][poke.nature]
         if self.nature == skill.nature:
@@ -72,7 +57,7 @@ class Pokemon:
         else:
             strategic_plus = 1
         return [nature_correspond*nature_plus*strategic_plus,nature_plus]
-    
+    # 计算伤害期望
     def find_plus_expect(self,skill,poke):
         nature_plus = plus_dict[skill.nature][poke.nature]
         if self.nature == skill.nature:
@@ -81,7 +66,7 @@ class Pokemon:
             nature_correspond = 1
         strategic_plus = 1.1
         return [nature_correspond*nature_plus*strategic_plus,nature_plus]
-
+    # 攻击
     def attack(self,skill,poke):
         if skill.PP > 0:
             skill.PP -= 1
@@ -99,11 +84,39 @@ class Pokemon:
         k = af[affect]
         return [attack_Hp,k]
 
-Pikachu = Pokemon([slam,thunder_shock,nuzzle,feint],electric,'Pikachu')
-Meowth = Pokemon([pay_day,snore,icy_wind,thunderbolt],normal,'Meowth')
-Charmander = Pokemon([scratch,fire_punch,inferno,ember],fire,'Charmander')
-Snorunt = Pokemon([powder_snow,blizzard,ice_punch,icy_wind],normal,'Snorunt')
-Skitty = Pokemon([pound,karate_chop,tackle,headbutt],normal,'Skitty')
+
+#******#
+thunder_shock = Skill(electric,40,100,30,'电击')
+nuzzle = Skill(electric,20,100,20,'蹭蹭脸颊')
+discharge = Skill(electric,80,100,15,'放电')
+feint = Skill(normal,30,100,10,'佯攻')
+#******#
+pay_day = Skill(normal,40,100,20,'聚宝功')
+snore = Skill(normal,50,100,15,'打鼾')
+fake_out = Skill(normal,40,100,10,'击掌奇袭')
+slash = Skill(normal,90,100,15,'劈开')
+#******#
+scratch = Skill(normal,40,100,35,'抓')
+ember = Skill(fire,40,100,25,'火花')
+fire_punch = Skill(fire,75,100,15,'火焰拳')
+inferno = Skill(fire,100,50,5,'炼狱')
+#******#
+powder_snow = Skill(ice,40,100,25,'细雪')
+blizzard = Skill(ice,110,70,5,'暴风雪')
+ice_punch = Skill(ice,75,100,15,'冰冻拳')
+crunch = Skill(ice,80,100,15,'咬碎')
+#******#
+pound = Skill(normal,40,100,35,'拍击')
+tackle = Skill(normal,40,100,35,'撞击')
+karate_chop = Skill(act,50,100,25,'空手劈')
+headbutt = Skill(normal,70,100,15,'头锤')
+
+
+Pikachu = Pokemon([thunder_shock,nuzzle,discharge,feint],electric,'皮卡丘',120,112,88)
+Meowth = Pokemon([pay_day,snore,fake_out,slash],normal,'喵喵',130,105,67)
+Charmander = Pokemon([scratch,fire_punch,inferno,ember],fire,'小火龙',140,110,100)
+Snorunt = Pokemon([powder_snow,blizzard,ice_punch,crunch],normal,'雪童子',150,90,100)
+Skitty = Pokemon([pound,karate_chop,tackle,headbutt],normal,'向尾喵',150,98,105)
 
 Pokemons_all = {
 0:Pikachu,
