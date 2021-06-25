@@ -35,7 +35,7 @@ class Skill:
 
 # 神奇宝贝
 class Pokemon:
-    def __init__(self,skills,nature,name,Hp,atk,df):
+    def __init__(self,skills,nature,name,Hp,atk,df,speed):
         
         self.skills = skills
         self.nature = nature
@@ -45,6 +45,7 @@ class Pokemon:
         self.level = 50
         self.atk = atk
         self.df = df      
+        self.speed=speed
     # 计算加成
     def find_plus(self,skill,poke):
         nature_plus = plus_dict[skill.nature][poke.nature]
@@ -117,17 +118,18 @@ low_kick = Skill(act,70,100,20,'踢倒')
 brick_break = Skill(act,75,100,15,'劈瓦')
 
 
-Pikachu = Pokemon([thunder_shock,nuzzle,discharge,feint],electric,'皮卡丘',120,112,88)
-Meowth = Pokemon([pay_day,snore,fake_out,slash],normal,'喵喵',130,105,67)
-Charmander = Pokemon([scratch,fire_punch,inferno,ember],fire,'小火龙',140,110,100)
-Snorunt = Pokemon([powder_snow,blizzard,ice_punch,crunch],normal,'雪童子',150,90,100)
-Skitty = Pokemon([pound,karate_chop,tackle,headbutt],normal,'向尾喵',150,98,105)
-Mankey = Pokemon([fury_swipes,thrash,low_kick,brick_break],act,'猴怪',140,130,80)
+Pikachu = Pokemon([thunder_shock,nuzzle,discharge,feint],electric,'皮卡丘',120,112,88,90)
+Meowth = Pokemon([pay_day,snore,fake_out,slash],normal,'喵喵',130,105,67,91)
+Charmander = Pokemon([scratch,fire_punch,inferno,ember],fire,'小火龙',140,110,100,63)
+Snorunt = Pokemon([powder_snow,blizzard,ice_punch,crunch],normal,'雪童子',150,90,100,50)
+Skitty = Pokemon([pound,karate_chop,tackle,headbutt],normal,'向尾喵',150,98,105,49)
+Mankey = Pokemon([fury_swipes,thrash,low_kick,brick_break],act,'猴怪',140,130,80,92)
 
 Pokemons_all = {
 0:Pikachu,
 1:Meowth,
 2:Charmander,
 3:Snorunt,
-4:Skitty
+4:Skitty,
+5:Mankey
 }

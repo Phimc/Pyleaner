@@ -1,9 +1,10 @@
-print('20377308,朱睦晨')
+print('20377308,Phmc')
 try:
     import Pokemon
     import PokemonSimpleAI as ai
     import numpy.random as rand
     print('载入成功!')
+
 except:
     print('缺失文件，游戏无法开始')
 
@@ -34,29 +35,26 @@ def speed_order(P1,P2):
 def play(poke,another):
     print('''%s的回合！\n你的技能:'''%poke.name)
     for i in range(4):
-        print('%d:%s        属性:%s,威力:%d,命中率:%d,PP:%d'
-        %(i+1,poke.skills[i].name,poke.skills[i].nature.name,poke.skills[i].atk,poke.skills[i].aim,poke.skills[i].PP))
+        print('%d:%s        属性:%s,威力:%d,命中率:%d'
+        %(i+1,poke.skills[i].name,poke.skills[i].nature.name,poke.skills[i].atk,poke.skills[i].aim))
     print('请选择')
-    
-    while True:
-        try:
-            choice = get_input(4)
-            d_Hp,af = poke.attack(poke.skills[choice],another)
-            break
-        except:
-            print('PP为0，请选择其他技能')
-    print('%s攻击%s ,造成了 %d 点伤害%s' 
+    choice = get_input(4)
+    d_Hp,af = poke.attack(poke.skills[choice],another)
+    print('%s攻击%s ,造成了 %d 点伤害%s!\n···········································' 
     %(poke.name,another.name,d_Hp,af))
 def aiplay(poke,another,choice):
     print('''%s的回合！\n你的技能:'''%poke.name)
     for i in range(4):
-        print('%d:%s        属性:%s,威力:%d,命中率:%d,PP:%d'
-        %(i+1,poke.skills[i].name,poke.skills[i].nature.name,poke.skills[i].atk,poke.skills[i].aim,poke.skills[i].PP))
+        print('%d:%s        属性:%s,威力:%d,命中率:%d'
+        %(i+1,poke.skills[i].name,poke.skills[i].nature.name,poke.skills[i].atk,poke.skills[i].aim))
     print('请选择')
     print(choice)
     d_Hp,af = poke.attack(poke.skills[choice],another)
-    print('%s攻击%s ,造成了 %d 点伤害%s' 
-    %(poke.name,another.name,d_Hp,af))
+    if af != 0:
+        print('%s攻击%s ,造成了 %d 点伤害%s!\n···········································' 
+        %(poke.name,another.name,d_Hp,af))
+    else:
+        print('%s的攻击无效！'%poke.name)
 # 胜负判定
 def check_winner(A,B):
     if A.Hp == 0:
@@ -77,44 +75,34 @@ print('选择游戏模式:\n1:与AI对战\n2：玩家对战')
 gamemode = get_input(2)
 if gamemode == 1:
     print('玩家1选择精灵')
-    c = get_input(6)
+    c = get_input(5)
     P1 = Pokemons_all[c]
     print('玩家2选择精灵')
     while True:
-        d= get_input(6)
+        d= get_input(5)
         if c == d:
             print('请选择另一个')
         else:
             P2 = Pokemons_all[d]
             break
-
+    # 回合循环
     while True:
-        Player_speed_order = speed_order(P1,P2)
-        if P1 == Player_speed_order[0]:
-            Show_state(P1,P2)
-            play(P1,P2)
-            if check_winner(P1,P2):
-                break
-            Show_state(P1,P2)
-            play(P2,P1)
-            if check_winner(P1,P2):
-                break
-        else:
-            Show_state(P1,P2)
-            play(P2,P1)
-            if check_winner(P1,P2):
-                break
-            Show_state(P1,P2)
-            play(P1,P2)
-            if check_winner(P1,P2):
-                break
+        P1,P2 = speed_order(P1,P2)
+        Show_state(P1,P2)
+        play(P1,P2)
+        if check_winner(P1,P2):
+            break
+        Show_state(P1,P2)
+        play(P2,P1)
+        if check_winner(P1,P2):
+            break
 else:
-    c = rand.randint(0,5)
+    c = rand.randint(0,4)
     P1 = Pokemons_all[c]
     print('AI选择了%s'%P1.name)
     print('玩家选择精灵')
     while True:
-        d= get_input(6)
+        d= get_input(5)
         if c == d:
             print('请选择另一个')
         else:
@@ -143,3 +131,9 @@ else:
             aiplay(P1,P2,aichoice)
             if check_winner(P1,P2):
                 break
+
+90
+91
+63
+50
+49
