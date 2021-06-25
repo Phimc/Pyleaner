@@ -8,18 +8,18 @@ class Nature:
         self.name = name
 
 
-normal = Nature('normal')
-act = Nature('act')
-fire = Nature('fire')
-ice = Nature('ice')
-electric = Nature()
+normal = Nature('一般')
+act = Nature('格斗')
+fire = Nature('火')
+ice = Nature('冰')
+electric = Nature('电')
 
 plus_dict = {}
 plus_dict[normal]   = {normal:1,  act:1,  fire:1,  ice:1,  electric:1}
 plus_dict[act]      = {normal:2,  act:1,  fire:1,  ice:0.5,electric:1}
 plus_dict[fire]     = {normal:1,  act:1,  fire:1,  ice:2,  electric:1}
-plus_dict[ice]      = {normal:1,  act:1,  fire:1,  ice:0.5,electric:1}
-plus_dict[electric] = {normal:1,  act:2,  fire:1,  ice:1,  electric:1}
+plus_dict[ice]      = {normal:1,  act:1,  fire:1,  ice:0.5,electric:2}
+plus_dict[electric] = {normal:1,  act:2,  fire:1,  ice:0.5,electric:1}
 af = {0.5:'，效果不佳。',1:'。',2:'，效果拔群！'}
 
 # 技能
@@ -110,6 +110,11 @@ pound = Skill(normal,40,100,35,'拍击')
 tackle = Skill(normal,40,100,35,'撞击')
 karate_chop = Skill(act,50,100,25,'空手劈')
 headbutt = Skill(normal,70,100,15,'头锤')
+#******#
+fury_swipes = Skill(act,18,80,15,'乱抓')
+thrash = Skill(act,120,100,10,'大闹一番')
+low_kick = Skill(act,70,100,20,'踢倒')
+brick_break = Skill(act,75,100,15,'劈瓦')
 
 
 Pikachu = Pokemon([thunder_shock,nuzzle,discharge,feint],electric,'皮卡丘',120,112,88)
@@ -117,6 +122,7 @@ Meowth = Pokemon([pay_day,snore,fake_out,slash],normal,'喵喵',130,105,67)
 Charmander = Pokemon([scratch,fire_punch,inferno,ember],fire,'小火龙',140,110,100)
 Snorunt = Pokemon([powder_snow,blizzard,ice_punch,crunch],normal,'雪童子',150,90,100)
 Skitty = Pokemon([pound,karate_chop,tackle,headbutt],normal,'向尾喵',150,98,105)
+Mankey = Pokemon([fury_swipes,thrash,low_kick,brick_break],act,'猴怪',140,130,80)
 
 Pokemons_all = {
 0:Pikachu,
