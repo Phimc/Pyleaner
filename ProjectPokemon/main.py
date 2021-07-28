@@ -13,8 +13,8 @@ def Show_state(A,B):
     %(A.name,A.Hp,A.MaxHp,B.name,B.Hp,B.MaxHp))
 # 检测输入
 def get_input(max):
-    a = input()
     while True:
+        a = input()
         try:
             b = int(a)
             if b <= max and b >= 0 :
